@@ -6,7 +6,7 @@ const initCanvas =(id)=> {
 
     
     return new fabric.Canvas(id, {
-        width:500,
+        width:1200,
         height:500,
         backgroundColor:'gray',
         selection:false
@@ -28,31 +28,51 @@ const setBackground = (url,canvas) => {
     });
 }
 
-const togglePan =()=> {
-    if(currentMode === modes.pan)
-    {
-        currentMode='';
+const toggleMode =(mode)=> {
+    if(mode === modes.pan){
+        if(currentMode === modes.pan){
+            currentMode='';
+            //canvas.isDrawingMode=true;
+            canvas.requestRenderAll();
+        }
+        else {
+            currentMode = modes.pan;
+        }
     }
-    else{
-        currentMode = modes.pan;
+    else if(mode === modes.drawing) {
+        if(currentMode === modes.drawing){
+            currentMode = '';
+            canvas.isDrawingMode=false;
+            canvas.requestRenderAll();
+        }
+        else {
+            currentMode = modes.drawing;
+        }
     }
+    console.log(mode)
 }
 
-const setPanEvents =(canvas)=>{
-     
+const setPanEvents =(canvas)=>{     
             //mouse : over
             canvas.on('mouse:move',(event) =>{
-                console.log(event);
+                //console.log(event);
             // if (mousePressed && currentMode === modes.pan) { 
 
                 if (mousePressed && currentMode === modes.pan) 
                 { 
                     canvas.setCursor('grab');
+                    canvas.isDrawingMode=false;
+                    
                     canvas.requestRenderAll();
 
                     const mEvent= event.e;
                     const delta = new fabric.Point(mEvent.movementX,mEvent.movementY);
                     canvas.relativePan(delta);
+                }
+                else if(mousePressed && currentMode === modes.drawing)
+                {
+                    canvas.isDrawingMode=true;
+                    canvas.requestRenderAll();
                 }
             });
             //mouse : down
@@ -62,8 +82,8 @@ const setPanEvents =(canvas)=>{
 
                 if(currentMode === modes.pan)
                 {       
-                canvas.setCursor('grab');
-                canvas.requestRenderAll();
+                    canvas.setCursor('grab');
+                    canvas.requestRenderAll();
                 }
             });
             //mouse : up
@@ -81,12 +101,10 @@ let touchPressed = false;
 
 let currentMode;
 const modes = {
-    pan:'pan'
+    pan:'pan',
+    drawing:'drawing'
 }
 
-
 setBackground(imagePath,canvas);
-
-
 
 setPanEvents(canvas);
