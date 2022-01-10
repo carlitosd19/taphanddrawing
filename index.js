@@ -37,6 +37,8 @@ const toggleMode =(mode)=> {
         }
         else {
             currentMode = modes.pan;
+            canvas.isDrawingMode=false;
+            canvas.requestRenderAll();
         }
     }
     else if(mode === modes.drawing) {
@@ -47,6 +49,8 @@ const toggleMode =(mode)=> {
         }
         else {
             currentMode = modes.drawing;
+            canvas.isDrawingMode=true;
+            canvas.requestRenderAll();
         }
     }
     console.log(mode)
@@ -68,12 +72,7 @@ const setPanEvents =(canvas)=>{
                     const mEvent= event.e;
                     const delta = new fabric.Point(mEvent.movementX,mEvent.movementY);
                     canvas.relativePan(delta);
-                }
-                else if(mousePressed && currentMode === modes.drawing)
-                {
-                    canvas.isDrawingMode=true;
-                    canvas.requestRenderAll();
-                }
+                }               
             });
             //mouse : down
             canvas.on('mouse:down',(event) =>{
