@@ -30,6 +30,7 @@ const setBackground = (url,canvas) => {
 
 const canvas = initCanvas('canvas');
 let mousePressed = false;
+let touchPressed = false;
 
 
 setBackground(imagePath,canvas);
@@ -37,20 +38,58 @@ setBackground(imagePath,canvas);
 //mouse : over
 canvas.on('mouse:move',(event) =>{
     //console.log(event);
-    if (mousePressed) { 
-     const mEvent= event.e;
-     const delta = new fabric.Point(mEvent.movementX,mEvent.movementY);
-     canvas.relativePan(delta);
-    }
+    // if (mousePressed) { 
+    //  const mEvent= event.e;
+    //  const delta = new fabric.Point(mEvent.movementX,mEvent.movementY);
+    //  canvas.relativePan(delta);
+    // }
 });
 //mouse : down
 canvas.on('mouse:down',(event) =>{
     //console.log(event);
-    mousePressed = true;
+    //mousePressed = true;
     
 });
 //mouse : up
 canvas.on('mouse:up',(event) =>{
     //console.log(event);
-    mousePressed = false;     
+   // mousePressed = false;     
+});
+
+
+canvas.on({
+    'touch:gesture': function(e) {
+        if (e.e.touches && e.e.touches.length == 2) {
+            pausePanning = true;
+            var point = new fabric.Point(e.self.x, e.self.y);
+            if (e.self.state == "start") {
+                zoomStartScale = self.canvas.getZoom();
+            }
+            var delta = zoomStartScale * e.self.scale;
+            self.canvas.zoomToPoint(point, delta);
+            pausePanning = false;
+        }
+    },
+    'object:selected': function() {
+        pausePanning = true;
+    },
+    'selection:cleared': function() {
+        pausePanning = false;
+    },
+    'touch:drag': function(e) {
+        if (pausePanning == false && undefined != e.e.layerX && undefined != e.e.layerY) {
+            currentX = e.e.layerX;
+            currentY = e.e.layerY;
+            xChange = currentX - lastX;
+            yChange = currentY - lastY;
+
+            if( (Math.abs(currentX - lastX) <= 50) && (Math.abs(currentY - lastY) <= 50)) {
+                var delta = new fabric.Point(xChange, yChange);
+                canvas.relativePan(delta);
+            }
+
+            lastX = e.e.layerX;
+            lastY = e.e.layerY;
+        }
+    }
 });
