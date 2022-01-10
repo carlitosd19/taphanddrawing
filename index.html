@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="./index.css"></script>
     <title>Document d</title>
-</head>
-<body>
-    <h1>Click into Toggle Drawing Button to start drawing over the canvas image</h1>
+  </head>
+  <body>
+    <h1
+      >Click into Toggle Drawing Button to start drawing over the canvas
+      image</h1
+    >
 
-<button onclick='toggleMode(modes.pan)'>Toggle Pan</button>
-<button onclick='toggleMode(modes.drawing)'>Toggle Drawing</button>
+    <button onclick="toggleMode(modes.pan)">Toggle Pan</button>
+    <button onclick="toggleMode(modes.drawing)">Toggle Drawing</button>
 
-<div style="overflow:scroll;">
+    <div id="Div1" style="float: left; width: 500px; overflow: scroll">
+      <canvas
+        id="canvas"
+        width="500"
+        style="border: 1px solid #ff0000"
+      ></canvas>
+    </div>
 
-</div>
-<canvas id="canvas"></canvas>
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- <div id="container" style="overflow: scroll">
+      <canvas id="canvas"></canvas>
+    </div> -->
 
     <script src="./lib/fabric.min.js"></script>
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>
