@@ -7,7 +7,7 @@ const initCanvas =(id)=> {
     
     return new fabric.Canvas(id, {
         width:1200,
-        height:500,
+        height:1400,
         backgroundColor:'gray',
         selection:false
     });
@@ -15,14 +15,6 @@ const initCanvas =(id)=> {
 
 const setBackground = (url,canvas) => {
         fabric.Image.fromURL(url,(img)=> {
-            // img.set({
-            //     left: 0,
-            //     top: 0
-            //     // Scale image to fit width / height ?
-            //   });
-            //   img.scaleToHeight(300);
-            //   img.scaleToWidth(820);
-
         canvas.backgroundImage = img
         canvas.requestRenderAll()
     });
@@ -48,12 +40,18 @@ const toggleMode =(mode)=> {
             canvas.requestRenderAll();
         }
         else {
+
+            //change the brush
+            //canvas.freeDrawingBrush = new fabric.SprayBrush(canvas);
+            canvas.freeDrawingBrush.color='red';
+            canvas.freeDrawingBrush.width=15
+
             currentMode = modes.drawing;
             canvas.isDrawingMode=true;
             canvas.requestRenderAll();
         }
     }
-    console.log(mode)
+    //console.log(mode)
 }
 
 const setPanEvents =(canvas)=>{     
