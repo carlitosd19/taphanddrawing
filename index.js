@@ -2,6 +2,27 @@ const imagePath = './img/citytransit.jpg';
 const image = new Image();
 image.src = imagePath;
 
+(function () {
+  var defaultOnTouchStartHandler = fabric.Canvas.prototype._onTouchStart;
+  fabric.util.object.extend(fabric.Canvas.prototype, {
+    _onTouchStart: function (e) {
+      var target = this.findTarget(e);
+      // if allowTouchScrolling is enabled, no object was at the
+      // the touch position and we're not in drawing mode, then
+      // let the event skip the fabricjs canvas and do default
+      // behavior
+      if (this.allowTouchScrolling && !target && !this.isDrawingMode) {
+        // returning here should allow the event to propagate and be handled
+        // normally by the browser
+        return;
+      }
+
+      // otherwise call the default behavior
+      defaultOnTouchStartHandler.call(this, e);
+    },
+  });
+})();
+
 const initCanvas = (id) => {
   return new fabric.Canvas(id, {
     width: 1200,
