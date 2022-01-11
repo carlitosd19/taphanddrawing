@@ -108,6 +108,14 @@ const setPanEvents = (canvas) => {
   });
 };
 
+const clearCanvas = (canvas) => {
+  canvas.getObjects().forEach((o) => {
+    if (o !== canvas.backgroundImage) {
+      canvas.remove(o);
+    }
+  });
+};
+
 const setColorListener = () => {
   const picker = document.getElementById('colorPicker');
   picker.addEventListener('change', (event) => {
