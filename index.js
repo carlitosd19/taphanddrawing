@@ -65,6 +65,7 @@ const toggleMode = (mode) => {
       //   canvas.freeDrawingBrush.width = 15;
       currentMode = modes.drawing;
       canvas.freeDrawingBrush.color = color;
+      canvas.freeDrawingBrush.width = 13;
       canvas.isDrawingMode = true;
       canvas.requestRenderAll();
     }
@@ -106,6 +107,20 @@ const setPanEvents = (canvas) => {
     canvas.setCursor('default');
     canvas.requestRenderAll();
   });
+};
+
+const exportCanvas = (canvas) => {
+  //IE/Edge (PNG only)
+  if (window.navigator.msSaveBlog) {
+    window.navigator.msSaveBlog(canvas.msToBlob(), 'canvas-image.png');
+  } else {
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.href = canvas.toDataURL();
+    a.download = 'canvas-img.png';
+    a.click();
+    document.body.removeChild(a);
+  }
 };
 
 const clearCanvas = (canvas) => {
