@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="./index.css"></script>
     <title>test 5</title>
-    <style>
-      /* canvas {
-        z-index: -1111;
-      } */
-    </style>
   </head>
   <body>
     <h1 style="padding-top: 100px">Test 5</h1>
@@ -18,8 +13,11 @@
     <button onclick="toggleMode(modes.pan)">Toggle Pan</button>
     <button onclick="toggleMode(modes.drawing)">Toggle Drawing</button>
 
+    <input id="colorPicker" value="#000000" data-jscolor="" />
+
     <canvas id="canvas"></canvas>
 
+    <script src="./lib/jscolor.min.js"></script>
     <script src="./lib/fabric.min.js"></script>
     <script src="./index.js"></script>
   </body>

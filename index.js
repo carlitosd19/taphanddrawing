@@ -61,10 +61,10 @@ const toggleMode = (mode) => {
     } else {
       //change the brush
       //canvas.freeDrawingBrush = new fabric.SprayBrush(canvas);
-      canvas.freeDrawingBrush.color = 'red';
-      canvas.freeDrawingBrush.width = 15;
-
+      //   canvas.freeDrawingBrush.color = 'red';
+      //   canvas.freeDrawingBrush.width = 15;
       currentMode = modes.drawing;
+      canvas.freeDrawingBrush.color = color;
       canvas.isDrawingMode = true;
       canvas.requestRenderAll();
     }
@@ -108,9 +108,17 @@ const setPanEvents = (canvas) => {
   });
 };
 
+const setColorListener = () => {
+  const picker = document.getElementById('colorPicker');
+  picker.addEventListener('change', (event) => {
+    color = event.target.value;
+    canvas.freeDrawingBrush.color = color;
+  });
+};
+
 const canvas = initCanvas('canvas');
 let mousePressed = false;
-let touchPressed = false;
+let color = '#000000';
 
 let currentMode;
 const modes = {
@@ -121,3 +129,5 @@ const modes = {
 setBackground(imagePath, canvas);
 
 setPanEvents(canvas);
+
+setColorListener();
