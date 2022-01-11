@@ -8,6 +8,9 @@ const initCanvas = (id) => {
     height: 1400,
     backgroundColor: 'gray',
     selection: false,
+    controlsAboveOverlay: true,
+    centeredScaling: true,
+    allowTouchScrolling: true,
   });
 };
 
